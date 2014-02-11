@@ -3,8 +3,10 @@ var mongoStore = require('connect-mongo');
 var MongoStore = require('connect-mongo')(express);
 var flash = require('connect-flash');
 var path = require('path');
+var errorHandle = require('./errorHandle.js');
 
 module.exports = function(app) {
+
   app.use(express.logger('dev'));
   app.use(express.static(path.resolve('public')));
   app.use(require('stylus').middleware(path.resolve('public'))); 
@@ -24,4 +26,8 @@ module.exports = function(app) {
     res.locals.error = req.flash('error');
     next();
   });
+  app.use(app.router);//error handle should execute after express router
+  errorHandle(app);
+
+
 };

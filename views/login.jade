@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  form(method='post', action='/login', enctype='application/x-www-form-urlencoded')
+    h3 用户登录 
+    ul
+      li
+        label(for='email') 邮箱
+        input(name='email')
+      li
+        label(for='password') 密码
+        input#pass(name='password', type='password')
+    input(type='submit', value='提交')
+

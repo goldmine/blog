@@ -1,7 +1,20 @@
+var pageHandle = require('../controllers/pages');
+var sessionHandle = require('../controllers/sessions');
+var userHandle = require('../controllers/users');
+
 
 module.exports = function(app) {
   app.get('/', function(req,res) {
-    req.flash('message', 'this is from flash');
-    res.render('index.jade', { message: req.flash('message')});
+    res.render('index.jade');
+  });
+
+  app.get('/login', function(req,res) {
+    req.flash('message', 'message 测试');
+    res.render('login.jade');
+  });
+
+  app.get('/signup', function(req,res) {
+    req.flash('error', 'error 测试');
+    res.render('signup.jade');
   });
 };

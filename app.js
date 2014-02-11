@@ -4,6 +4,7 @@ var routes = require('./routes');
 var middleWare = require('./middleWare');
 
 mongoose.connect('mongodb://localhost/blog', function(err) {
+
   if (err) { throw err };
   var app = express();
 
@@ -13,4 +14,5 @@ mongoose.connect('mongodb://localhost/blog', function(err) {
   app.listen(3000, function() {
     console.log('server started at port 3000');
   });
+
 });

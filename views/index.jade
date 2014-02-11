@@ -1,4 +1,15 @@
 extends layout
 
 block content
-  h2 this is index
+  if session.user
+    p
+      a(href="/post/create") New post
+  if !(posts && posts.length)
+    p Nothing to see here. Move along...
+  else
+    ul.posts
+      each post in posts
+        li
+          h2
+            a(href="/post/#{post.id}")= post.title
+

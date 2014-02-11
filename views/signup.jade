@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  form(method='post', action='/signup', enctype='application/x-www-form-urlencoded')
+    h3 用户注册 
+    ul
+      li
+        label(for='username') 用户名
+        input(name='username')
+      li
+        label(for='email') 邮箱
+        input(name='email')
+      li
+        label(for='password') 密码
+        input(name='password', type='password')
+      li
+        label(for='confirm') 密码确认
+        input(name='confirm', type='password')
+    input(type='submit', value='提交')
+
