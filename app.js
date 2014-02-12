@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var express = require('express');
+
+var models = require('./models');
 var routes = require('./routes');
 var middleWare = require('./middleWare');
 

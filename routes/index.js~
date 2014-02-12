@@ -4,17 +4,13 @@ var userHandle = require('../controllers/users');
 
 
 module.exports = function(app) {
-  app.get('/', function(req,res) {
-    res.render('index.jade');
-  });
 
-  app.get('/login', function(req,res) {
-    req.flash('message', 'message 测试');
-    res.render('login.jade');
-  });
+  app.get('/', pageHandle.index); 
 
-  app.get('/signup', function(req,res) {
-    req.flash('error', 'error 测试');
-    res.render('signup.jade');
-  });
-};
+  app.get('/login', sessionHandle.new); 
+  app.get('/logout', sessionHandle.destroy); 
+
+  app.get('/signup', userHandle.new); 
+  app.post('/signup', userHandle.create); 
+
+}

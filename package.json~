@@ -13,7 +13,6 @@
     "connect-mongo": "*",
     "connect-flash": "*",
     "node-captcha": "*",
-    "formidable": "*",
-    "email-validator": "*"
+    "formidable": "*"
   }
 }

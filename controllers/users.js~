@@ -37,7 +37,7 @@ exports.create = function(req,res,next) {
       if (err) { return next(err) };
 
       var user = {
-        email: email,
+        _id: email,
         username: username,
       }; 
       user.salt = bytes.toString('utf8');
