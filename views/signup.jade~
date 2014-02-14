@@ -16,5 +16,8 @@ block content
       li
         label(for='confirm') 密码确认
         input(name='confirm', type='password')
-    input(type='submit', value='Sign Up')
+      li
+        img(src='./temp/#{capData}')
+        input(name='captcha', type='text')
+    input(type='submit', value='提交')
 

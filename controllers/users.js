@@ -3,10 +3,20 @@ var User = mongoose.model('User');
 var crypto = require('crypto');
 var hash = require('../helpers').hash;
 var cleanString = require('../helpers').cleanString;
+var captcha = require('node-captcha');
 
 
 exports.new = function(req,res) {
-  res.render('signup.jade');
+  var option = {
+    fileMode : 1, 
+    saveDir: "E:/blog/public/temp", //Todo: must put it here,need fix it in settings
+    size: 5 
+  };
+  captcha(option,function(text,data) {
+    console.log(text);
+    req.session.capText = text.toLowerCase();
+    return res.render('signup.jade',{ capData: data });
+  });
 };
 
 exports.create = function(req,res,next) {
@@ -15,15 +25,21 @@ exports.create = function(req,res,next) {
   var email = cleanString(req.body.email);
   var password = cleanString(req.body.password);
   var passwordConfirm = cleanString(req.body.confirm);
+  var cap = cleanString(req.body.captcha);
 
-  if (!username || !email || !password || !passwordConfirm) {
-    req.flash('error', "用户名，邮箱，或密码不能为空");
+  if (!username || !email || !password || !passwordConfirm || !cap) {
+    req.flash('error', "用户名，邮箱，密码，验证码，不能为空");
     console.log(req.body.confirm + '/' + passwordConfirm);
     return res.redirect('/signup'); 
   };
 
   if (password != passwordConfirm) {
     req.flash('error', "密码输入不一样");
+    return res.redirect('/signup'); 
+  };
+
+  if (cap.toLowerCase() != req.session.capText) {
+    req.flash('error', "验证码错误！");
     return res.redirect('/signup'); 
   };
   
