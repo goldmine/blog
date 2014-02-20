@@ -4,12 +4,14 @@ var MongoStore = require('connect-mongo')(express);
 var flash = require('connect-flash');
 var path = require('path');
 var errorHandle = require('./errorHandle.js');
+var loginFromCookie = require('./loginFromCookie.js');
 
 module.exports = function(app) {
 
   app.use(express.logger('dev'));
   app.use(express.static(path.resolve('public')));
   app.use(require('stylus').middleware(path.resolve('public'))); 
+  
   app.use(express.cookieParser());
   app.use(express.session({
     secret: "my secret", 
@@ -26,6 +28,9 @@ module.exports = function(app) {
     res.locals.error = req.flash('error');
     next();
   });
+
+
+  loginFromCookie(app); 
   app.use(app.router);//error handle should execute after express router
   errorHandle(app);
 

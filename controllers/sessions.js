@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Token = mongoose.model('Token');
 var crypto = require('crypto');
 var hash = require('../helpers').hash;
 var cleanString = require('../helpers').cleanString;
@@ -10,7 +11,11 @@ exports.new = function(req,res) {
   res.render('login.jade');
 };
 
-exports.destroy = function(req,res) {
+exports.destroy = function(req,res,next) {
+  Token.findOneAndRemove({email: req.session.user.email}, function(err) {
+    if (err) { next(err) };
+    res.clearCookie('loginToken');
+  });
   req.session.user = null;
   req.flash('message', "成功登出");
   res.redirect('/');
@@ -42,14 +47,35 @@ exports.create = function(req,res,next) {
     };
 
     u.lastLoginAt = Date.now()
-    console.log(JSON.stringify(u));
 
     u.save(function(err, result) {
       if (err) { return next(err) };
-        req.session.user = result;
-        req.session.isLoggedIn = true; 
-        req.flash('message', "登录成功");
-        return res.redirect('/');
+      if ('on' == req.body.rememberMe) {
+        Token.findOne({email: email}, function(err,findToken) {
+          if (findToken) {
+            findToken.token = Token.randomToken();
+            findToken.save(function(err) {
+              if (err) { return next(err) };
+              res.cookie('loginToken', findToken, { maxAge: 900000});
+            });
+          
+          } else {
+              var newToken = new Token;
+              newToken.token = Token.randomToken();
+              newToken.series = Token.randomToken();
+              newToken.email = email; 
+              newToken.save(function(err,token) {
+                if (err) { return next(err) };
+                res.cookie('loginToken', token, { maxAge: 900000});
+              })
+          }
+        });
+
+      };
+      req.session.user = result;
+      req.session.isLoggedIn = true; 
+      req.flash('message', "登录成功");
+      return res.redirect('/');
     });
   });
 };
