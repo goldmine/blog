@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  form(method='post', action='/club')
+    h3 创建俱乐部 
+    ul
+      li
+        label(for='name') 邮箱
+        input(name='name')
+    input(type='submit', value='提交')
+

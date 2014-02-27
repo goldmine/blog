@@ -1,5 +1,4 @@
 var express = require('express');
-var mongoStore = require('connect-mongo');
 var MongoStore = require('connect-mongo')(express);
 var flash = require('connect-flash');
 var path = require('path');

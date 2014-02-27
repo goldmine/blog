@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  each club in clubs
+    li
+      a(href='/club/#{club._id}') club.name
