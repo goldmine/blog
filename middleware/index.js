@@ -4,7 +4,6 @@ var MongoStore = require('connect-mongo')(express);
 var flash = require('connect-flash');
 var path = require('path');
 var errorHandle = require('./errorHandle.js');
-var loginFromCookie = require('./loginFromCookie.js');
 
 module.exports = function(app) {
 
@@ -29,8 +28,6 @@ module.exports = function(app) {
     next();
   });
 
-
-  loginFromCookie(app); 
   app.use(app.router);//error handle should execute after express router
   errorHandle(app);
 

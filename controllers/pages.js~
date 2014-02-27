@@ -1,3 +1,4 @@
-exports.home = function(req,res) {
-  res.render('index.jade')
+exports.index = function(req,res) {
+  req.flash('message', 'test flash');
+  res.render('index.jade');
 };

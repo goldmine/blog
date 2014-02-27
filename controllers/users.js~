@@ -9,7 +9,7 @@ var captcha = require('node-captcha');
 exports.new = function(req,res) {
   var option = {
     fileMode : 1, 
-    saveDir: "E:/blog/public/temp", //Todo: fix it in settings
+    saveDir: "E:/blog/public/temp", //Todo: must put it here,need fix it in settings
     size: 5 
   };
   captcha(option,function(text,data) {
