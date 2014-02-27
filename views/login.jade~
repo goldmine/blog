@@ -9,6 +9,6 @@ block content
         input(name='email')
       li
         label(for='password') 密码
-        input#pass(name='password', type='password')
+        input(name='password', type='password')
     input(type='submit', value='提交')
 
