@@ -10,6 +10,7 @@ module.exports = function(app) {
   app.use(express.static(path.resolve('public')));
   app.use(require('stylus').middleware(path.resolve('public'))); 
   
+  app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({
     secret: "my secret", 

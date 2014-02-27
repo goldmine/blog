@@ -10,7 +10,7 @@ exports.new = function(req,res) {
   res.render('login.jade');
 };
 
-exports.destroy = function(req,res,next) {
+exports.delete = function(req,res,next) {
   req.session.user = null;
   req.flash('message', "成功登出");
   res.redirect('/');
